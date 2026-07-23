@@ -98,7 +98,7 @@ class Storage extends Layer {
         });
 
         this.filter.addEventListener("keyup", e => {
-            if(e.keyCode < 33 && e.keyCode > 126) return;
+            if(e.keyCode < 33 || e.keyCode > 126) return;
             this.showFiles();
         });
 
@@ -145,15 +145,16 @@ class Storage extends Layer {
             if(response.code === 200) {
                 new Toast(response.info).show();
             }
-
-            this.storageFile.value = "";
-            this.storage.upload.value = "Speichern";
         };
 
         xhr.onerror = () => {
             new Toast("Upload fehlgeschlagen").show();
-            this.storage.upload.value = "Speichern";
         }
+
+		xhr.onloadend = () => {
+			this.storageFile.value = "";
+			this.storage.upload.value = "Speichern";
+		};
 
         xhr.send(fd);
     }
