@@ -131,6 +131,7 @@ class Storage extends Layer {
         const fd = new FormData();
         fd.append("ufile", file);
 
+		this.storage.upload.disabled = true;
         const xhr = new XMLHttpRequest();
         xhr.open("POST", "/file/upload");
 
@@ -154,6 +155,7 @@ class Storage extends Layer {
 		xhr.onloadend = () => {
 			this.storageFile.value = "";
 			this.storage.upload.value = "Speichern";
+			this.storage.upload.disabled = false;
 		};
 
         xhr.send(fd);
